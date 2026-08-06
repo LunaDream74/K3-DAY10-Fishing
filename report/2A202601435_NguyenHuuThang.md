@@ -118,8 +118,8 @@ Ngoài compile check, tôi đã chạy smoke test với payload giả lập gồ
 | --- | ---: | ---: | ---: | --- |
 | `retrieval_hit_rate` | 1.0000 | 0.8750 | 1.0000 | Corruption làm giảm 0.1250; repair phục hồi hoàn toàn |
 | `mean_token_f1` | 0.6667 | 0.5475 | 0.6667 | Giảm 0.1192 rồi trở lại baseline |
-| `judge_accuracy` | 0.6250 | 0.5417 | 0.6250 | GPT-4o-mini judge giảm 0.0833 rồi phục hồi baseline |
-| `mean_judge_score` | 3.5000 | 3.2917 | 3.5000 | GPT-4o-mini judge giảm 0.2083 rồi phục hồi baseline |
+| `judge_accuracy` | 0.6667 | 0.5417 | 0.6667 | Giảm 0.1250 rồi phục hồi; cả ba lượt dùng heuristic fallback |
+| `mean_judge_score` | 3.6667 | 3.1667 | 3.6667 | Giảm 0.5000 rồi phục hồi 0.5000 |
 | Quality checks | PASS, 16/16 | FAIL, 9/16 | PASS, 16/16 | Corruption làm thất bại 7 checks; repair khôi phục tất cả |
 | Freshness status | PASS, 0/24 stale | FAIL, 2/24 stale | PASS, 0/24 stale | Corruption đổi 2 ngày thành `2020-01-01` |
 
