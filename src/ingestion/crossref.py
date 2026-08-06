@@ -54,7 +54,7 @@ def parse_crossref_payload(payload: dict) -> list[PaperRecord]:
         if not doi or not title:
             continue
 
-        summary = _strip_markup(_text(item.get("abstract")))
+        summary = _strip_markup(_text(item.get("abstract") or item.get("description")))
         authors = _parse_authors(item.get("author"))
         categories = _unique_texts(item.get("subject"))
         published = _extract_date(item, ("published-print", "published-online", "published", "issued", "created"))
@@ -106,7 +106,6 @@ def fetch_source_records(settings: Settings) -> list[PaperRecord]:
         "query": settings.source_query,
         "filter": settings.source_filter,
         "rows": settings.max_results,
-        "select": "DOI,title,abstract,author,subject,published,published-print,published-online,issued,created,indexed,deposited,URL,link,publisher",
     }
     headers = {"User-Agent": "day10-data-observability-lab/0.1 (Crossref educational client)"}
 

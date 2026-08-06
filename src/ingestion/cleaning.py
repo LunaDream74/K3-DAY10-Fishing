@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from html import unescape
+from pathlib import Path
 import re
 
 import pandas as pd
 
+from core.utils import write_csv, write_json
 from ingestion.crossref import PaperRecord
 
 
@@ -38,7 +40,7 @@ def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.
     rows: list[dict] = []
     for record in records:
         paper_id = _clean_text(record.paper_id).lower()
-        title = _clean_text(record.title)
+        title = _clean_text(record.title, strip_markup=True)
         summary = _clean_text(record.summary, strip_markup=True)
         authors = _clean_list(record.authors)
         categories = _clean_list(record.categories)
@@ -48,8 +50,8 @@ def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.
 
         published_ts = pd.to_datetime(record.published, errors="coerce", utc=True)
         updated_ts = pd.to_datetime(record.updated, errors="coerce", utc=True)
-        # A useful embedding document needs an identity, title, abstract, and a valid publication date.
-        if not paper_id or not title or not summary or pd.isna(published_ts):
+        # Short abstracts carry too little semantic information for useful retrieval.
+        if not paper_id or not title or len(summary) < 100 or pd.isna(published_ts):
             continue
 
         published = published_ts.date().isoformat()
@@ -57,12 +59,7 @@ def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.
         age_days = max(0, int((normalized_run_date.normalize() - published_ts.normalize()).days))
         authors_joined = ", ".join(authors)
         categories_joined = ", ".join(categories)
-        text_parts = [f"Title: {title}", f"Abstract: {summary}"]
-        if authors_joined:
-            text_parts.append(f"Authors: {authors_joined}")
-        if categories_joined:
-            text_parts.append(f"Categories: {categories_joined}")
-        text_parts.append(f"Published: {published}")
+        text_for_embedding = f"Title: {title} | Authors: {authors_joined} | Summary: {summary}"
 
         rows.append(
             {
@@ -81,7 +78,7 @@ def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.
                 "authors_joined": authors_joined,
                 "categories_joined": categories_joined,
                 "summary_chars": len(summary),
-                "text_for_embedding": "\n".join(text_parts),
+                "text_for_embedding": text_for_embedding,
             }
         )
 
@@ -94,6 +91,12 @@ def build_clean_dataframe(records: list[PaperRecord], run_date: datetime) -> pd.
     df = df.sort_values(["_updated_sort", "published", "paper_id"], ascending=[False, False, True])
     df = df.drop_duplicates(subset=["paper_id"], keep="first").drop(columns="_updated_sort")
     return df.sort_values(["published", "paper_id"], ascending=[False, True]).reset_index(drop=True)
+
+
+def save_clean_dataframe(df: pd.DataFrame, csv_path: Path, json_path: Path) -> None:
+    """Persist the same cleaned dataset as CSV and record-oriented JSON artifacts."""
+    write_csv(df, csv_path)
+    write_json(json_path, df.to_dict(orient="records"))
 
 
 def _clean_text(value: object, *, strip_markup: bool = False) -> str:
