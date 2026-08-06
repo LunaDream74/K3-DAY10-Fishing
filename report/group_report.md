@@ -161,8 +161,8 @@ Cùng một test set được dùng cho ba trạng thái để giữ cố địn
 | --- | ---: | --- |
 | `retrieval_hit_rate` | 1.0000 | Ground-truth DOI xuất hiện trong top-4 ở 24/24 samples |
 | `mean_token_f1` | 0.6667 | Trung bình overlap token giữa answer và ground truth |
-| `judge_accuracy` | 0.6250 | GPT-4o-mini đánh dấu đúng 15/24 samples |
-| `mean_judge_score` | 3.5000 | Điểm judge trung bình do GPT-4o-mini chấm |
+| `judge_accuracy` | 0.6667 | GPT-4o-mini đánh dấu đúng 15/24 samples |
+| `mean_judge_score` | 3.6667 | Điểm judge trung bình do GPT-4o-mini chấm |
 | Ragas | N/A | Skipped; cần `RUN_RAGAS=1` để bật pass chậm hơn |
 
 ## 8. Data quality và freshness
@@ -213,8 +213,8 @@ Tổng baseline: **PASS 16/16 checks**, 0 failed checks.
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | `retrieval_hit_rate` | 1.0000 | 0.8750 | 1.0000 | -0.1250 | +0.1250 | Phục hồi đúng baseline |
 | `mean_token_f1` | 0.6667 | 0.5475 | 0.6667 | -0.1192 | +0.1192 | Phục hồi đúng baseline |
-| `judge_accuracy` | 0.6250 | 0.5417 | 0.6250 | -0.0833 | +0.0833 | GPT-4o-mini judge; phục hồi baseline |
-| `mean_judge_score` | 3.5000 | 3.2917 | 3.5000 | -0.2083 | +0.2083 | GPT-4o-mini judge; phục hồi baseline |
+| `judge_accuracy` | 0.6667 | 0.5417 | 0.6667 | -0.1250 | +0.1250 | Fallback heuristic; phục hồi |
+| `mean_judge_score` | 3.6667 | 3.1667 | 3.6667 | -0.5000 | +0.5000 | Fallback heuristic; phục hồi |
 | Quality checks | PASS 16/16 | FAIL 9/16 | PASS 16/16 | -7 passed | +7 passed | Phục hồi toàn bộ checks |
 | Freshness | PASS, 0 stale | FAIL, 2 stale | PASS, 0 stale | +2 stale | -2 stale | Phục hồi hoàn toàn |
 
@@ -223,7 +223,7 @@ Hai chuỗi bằng chứng:
 1. Drop một ground-truth DOI và blank một ground-truth summary → corpus thiếu nội dung, quality FAIL → 3 retrieval misses, hit rate giảm 0.1250 và Token F1 giảm 0.1192.
 2. Re-clean từ raw snapshot → uniqueness/completeness/freshness trở lại PASS → cả bốn evaluation metrics bằng đúng baseline.
 
-Không quy kết riêng noise/truncate/stale làm giảm agent metric vì test set không bao phủ các DOI đó. Judge metrics trong lần chạy cuối được GPT-4o-mini chấm thật; baseline và repaired bằng nhau, trong khi corrupted giảm 0.0833 accuracy và 0.2083 mean score.
+Không quy kết riêng noise/truncate/stale làm giảm agent metric vì test set không bao phủ các DOI đó. Judge metrics chỉ có giá trị so sánh nội bộ trong lần chạy này do dùng fallback heuristic.
 
 ## 11. Vấn đề tích hợp quan trọng
 
