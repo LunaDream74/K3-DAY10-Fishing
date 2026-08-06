@@ -1,0 +1,138 @@
+{
+  "report_name": "baseline_quality",
+  "generated_at": "2026-08-06T03:38:55.823351+00:00",
+  "total_rows": 24,
+  "passed": true,
+  "passed_checks": 16,
+  "failed_checks": 0,
+  "checks": [
+    {
+      "name": "required_columns",
+      "dimension": "schema",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": [],
+      "expected": "columns present: age_days, paper_id, published, summary, text_for_embedding, title"
+    },
+    {
+      "name": "row_count",
+      "dimension": "completeness",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 24,
+      "expected": ">= 24 rows"
+    },
+    {
+      "name": "paper_id_complete",
+      "dimension": "completeness",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "0 empty paper_id values"
+    },
+    {
+      "name": "paper_id_unique",
+      "dimension": "uniqueness",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "0 rows with duplicate paper_id values"
+    },
+    {
+      "name": "title_complete",
+      "dimension": "completeness",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "0 empty titles"
+    },
+    {
+      "name": "title_length",
+      "dimension": "validity",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "all non-empty titles have >= 10 characters"
+    },
+    {
+      "name": "summary_complete",
+      "dimension": "completeness",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "0 empty summaries"
+    },
+    {
+      "name": "summary_length",
+      "dimension": "validity",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "all summaries have >= 100 characters"
+    },
+    {
+      "name": "summary_chars_consistent",
+      "dimension": "consistency",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "summary_chars equals the normalized summary length"
+    },
+    {
+      "name": "text_for_embedding_complete",
+      "dimension": "completeness",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "0 empty text_for_embedding values"
+    },
+    {
+      "name": "text_for_embedding_consistent",
+      "dimension": "consistency",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "each embedding text contains its title and summary"
+    },
+    {
+      "name": "published_valid",
+      "dimension": "validity",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "all published values are parseable dates"
+    },
+    {
+      "name": "age_days_valid",
+      "dimension": "validity",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "all age_days values are numeric and >= 0"
+    },
+    {
+      "name": "published_age_consistent",
+      "dimension": "consistency",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "age_days agrees with published date within 1 day"
+    },
+    {
+      "name": "freshness_threshold",
+      "dimension": "freshness",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "0 rows older than 180 days"
+    },
+    {
+      "name": "corruption_markers_absent",
+      "dimension": "validity",
+      "passed": true,
+      "failed_rows": 0,
+      "observed": 0,
+      "expected": "0 rows containing known corruption/noise markers"
+    }
+  ]
+}
