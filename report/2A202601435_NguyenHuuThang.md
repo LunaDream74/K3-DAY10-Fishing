@@ -105,7 +105,7 @@ Ngoài compile check, tôi đã chạy smoke test với payload giả lập gồ
 ## 7. Hiểu biết về luồng end-to-end
 
 1. Crossref trả metadata; ingestion lưu response để audit và parse thành `PaperRecord`. Cleaning chuẩn hóa dữ liệu, tạo `text_for_embedding`; embedding model biến text thành vector và ChromaDB lưu vector cùng metadata để retrieval truy vấn.
-2. Mỗi sample evaluation chứa câu hỏi, ground truth và `ground_truth_doc_ids`. IDs được so với tài liệu retrieval trả về để tính hit rate; câu trả lời được so với ground truth để tính Token F1 và judge metrics. Trong lần chạy này LLM evaluator không khả dụng, vì vậy `judge_accuracy` và `mean_judge_score` đến từ fallback heuristic như ghi trong answers artifacts, không phải lượt chấm trực tiếp của LLM.
+2. Mỗi sample evaluation chứa câu hỏi, ground truth và `ground_truth_doc_ids`. IDs được so với tài liệu retrieval trả về để tính hit rate; câu trả lời được so với ground truth để tính Token F1 và judge metrics. Trong lần chạy cuối, evaluator sử dụng OpenAI GPT-4o-mini thành công; reasoning chi tiết cho từng sample được lưu trong answers artifacts.
 3. Quality checks đo completeness, uniqueness, validity và consistency của dữ liệu. Freshness monitoring tập trung vào tuổi dữ liệu, ngày mới nhất/cũ nhất và số record vượt ngưỡng stale.
 4. Baseline, corrupted và repaired phải dùng cùng test set để giữ nguyên độ khó và ground truth. Nếu thay test set, chênh lệch metric không còn phản ánh riêng tác động của corruption/repair.
 5. Repair thành công khi repaired clean artifact khôi phục schema/chất lượng/freshness và các retrieval/answer metrics tiến gần hoặc trở lại baseline. Cần đối chiếu đồng thời clean data, quality report, freshness report và comparison metrics.
@@ -118,8 +118,8 @@ Ngoài compile check, tôi đã chạy smoke test với payload giả lập gồ
 | --- | ---: | ---: | ---: | --- |
 | `retrieval_hit_rate` | 1.0000 | 0.8750 | 1.0000 | Corruption làm giảm 0.1250; repair phục hồi hoàn toàn |
 | `mean_token_f1` | 0.6667 | 0.5475 | 0.6667 | Giảm 0.1192 rồi trở lại baseline |
-| `judge_accuracy` | 0.6667 | 0.5417 | 0.6667 | Giảm 0.1250 rồi phục hồi; dùng fallback heuristic |
-| `mean_judge_score` | 3.6667 | 3.1667 | 3.6667 | Giảm 0.5000 rồi phục hồi; dùng fallback heuristic |
+| `judge_accuracy` | 0.6250 | 0.5417 | 0.6250 | GPT-4o-mini judge giảm 0.0833 rồi phục hồi baseline |
+| `mean_judge_score` | 3.5000 | 3.2917 | 3.5000 | GPT-4o-mini judge giảm 0.2083 rồi phục hồi baseline |
 | Quality checks | PASS, 16/16 | FAIL, 9/16 | PASS, 16/16 | Corruption làm thất bại 7 checks; repair khôi phục tất cả |
 | Freshness status | PASS, 0/24 stale | FAIL, 2/24 stale | PASS, 0/24 stale | Corruption đổi 2 ngày thành `2020-01-01` |
 
@@ -134,7 +134,7 @@ Phân tích theo từng câu hỏi cho thấy ba retrieval miss đều thuộc t
 
 Không thể kết luận inject-noise là corruption ảnh hưởng mạnh nhất trong lần chạy này: hai tài liệu bị inject noise, tài liệu bị truncate title và hai tài liệu bị làm stale không nằm trong ground-truth documents của test set. Chúng làm quality/freshness checks fail nhưng không có sample tương ứng để đo tác động riêng lên agent metrics. Hai duplicate documents có xuất hiện trong test set nhưng không tạo thay đổi metric quan sát được. Giới hạn này cho thấy evaluation set cần bao phủ từng corruption scenario nếu muốn quy kết tác động theo từng loại lỗi.
 
-Cuối cùng, `baseline_answers.json` và các answers artifacts đều ghi `Fallback heuristic judge used because the LLM evaluator was unavailable`. Do đó các judge metrics vẫn hữu ích để so sánh nhất quán ba trạng thái, nhưng không nên diễn giải là đánh giá trực tiếp từ model LLM hoặc dùng chúng để khẳng định chất lượng ngôn ngữ tuyệt đối.
+Trong lần chạy cuối, `baseline_answers.json`, `corrupted_answers.json` và `repaired_answers.json` chứa reasoning chi tiết do GPT-4o-mini tạo, xác nhận evaluator thật đã hoạt động. Judge accuracy giảm từ 0.6250 xuống 0.5417 và mean judge score giảm từ 3.5000 xuống 3.2917 sau corruption; cả hai trở lại đúng baseline sau repair. Vì LLM judge có thể có dao động giữa các lần gọi, các con số này gắn với artifacts của lần chạy 2026-08-06 và nên được tái hiện nhiều lần nếu cần ước lượng độ ổn định.
 
 ## 9. Điều học được và hướng cải thiện
 
