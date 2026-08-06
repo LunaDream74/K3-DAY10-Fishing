@@ -1,7 +1,7 @@
 {
   "backend": "chroma",
   "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
-  "persist_path": "D:\\tai lieu hoc tap\\VinAI\\Day10\\Lap\\K3-DAY10-Fishing\\data\\chroma",
+  "persist_path": "D:\\AI_Vin\\LAB\\K3-DAY10-Fishing\\data\\chroma",
   "collection_name": "papers-corrupted",
   "documents": [
     {
