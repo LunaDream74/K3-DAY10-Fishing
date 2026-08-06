@@ -1,0 +1,60 @@
+{
+  "corrupted_at": "2026-08-06T11:22:03.225238",
+  "original_rows": 24,
+  "corrupted_rows": 24,
+  "corruption_actions": [
+    {
+      "action": "drop_latest_records",
+      "count": 2,
+      "affected_paper_ids": [
+        "10.1111/exsy.70341",
+        "10.2118/234689-pa"
+      ],
+      "description": "Removed 2 most recently published records."
+    },
+    {
+      "action": "blank_summary",
+      "count": 2,
+      "affected_paper_ids": [
+        "10.1007/s10278-026-02086-9",
+        "10.21203/rs.3.rs-10178277/v1"
+      ],
+      "description": "Set summary to empty string for 2 records."
+    },
+    {
+      "action": "inject_noise",
+      "count": 2,
+      "affected_paper_ids": [
+        "10.2196/preprints.106157",
+        "10.3390/buildings16132637"
+      ],
+      "description": "Injected [corrupted_noise] markers and lorem ipsum noise into summary."
+    },
+    {
+      "action": "truncate_title",
+      "count": 1,
+      "affected_paper_ids": [
+        "10.21079/11681/50309"
+      ],
+      "description": "Truncated title to 'Short' (under MIN_TITLE_CHARS)."
+    },
+    {
+      "action": "stale_published_date",
+      "count": 2,
+      "affected_paper_ids": [
+        "10.63646/kpqm1958",
+        "10.21203/rs.3.rs-10012178/v1"
+      ],
+      "description": "Set published date to 2020-01-01 (age_days = 2400 > 180 days threshold)."
+    },
+    {
+      "action": "add_duplicates",
+      "count": 2,
+      "affected_paper_ids": [
+        "10.35314/3y9hy151",
+        "10.20944/preprints202602.0996.v1"
+      ],
+      "description": "Duplicated 2 rows at the end of the dataframe."
+    }
+  ]
+}
