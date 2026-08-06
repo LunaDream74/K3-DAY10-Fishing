@@ -2,15 +2,15 @@
 
 ## 1. Thông tin cá nhân
 
-| Thông tin | Nội dung |
-| :--- | :--- |
-| Họ và tên | Nguyễn Hữu Hiếu |
-| MSSV | 2A202601429 |
-| Khóa/Lớp | K3 |
-| Tên nhóm | Nhóm 3 người |
-| Vai trò chính | Corruption & Integration Owner (Thành viên 3) |
-| Repository | Local Repository (Day 10 - Data Pipeline & Data Observability) |
-| Ngày hoàn thành | 2026-08-06 |
+| Thông tin         | Nội dung                                                      |
+| :----------------- | :------------------------------------------------------------- |
+| Họ và tên       | Nguyễn Hữu Hiếu                                             |
+| MSSV               | 2A202601429                                                    |
+| Khóa/Lớp         | K3                                                             |
+| Tên nhóm         | Nhóm 3 người                                                |
+| Vai trò chính    | Corruption & Integration Owner (Thành viên 3)                |
+| Repository         | Local Repository (Day 10 - Data Pipeline & Data Observability) |
+| Ngày hoàn thành | 2026-08-06                                                     |
 
 ---
 
@@ -18,37 +18,39 @@
 
 ### Phần việc sở hữu
 
-| Module/deliverable | File/hàm phụ trách | Input nhận vào | Output bàn giao | Trạng thái |
-| :--- | :--- | :--- | :--- | :--- |
-| **Data Corruption Simulation** | `src/ingestion/corruption.py` (`corrupt_clean_dataframe`) | `clean_csv` (`df`) | `corrupted_clean_csv` & `corruption_log.json` | Hoàn thành |
-| **Baseline Pipeline Orchestration** | `src/pipelines/phase1.py` (`run_phase1_pipeline`) | Raw records & Config Settings | Baseline Collection `papers-baseline`, `baseline_metrics.json`, `phase1_report.md` | Hoàn thành |
-| **Corruption Flow Orchestration** | `src/pipelines/corruption_flow.py` (`run_corruption_flow_pipeline`) | Clean baseline & Raw snapshot | Corrupted/Repaired collections, `corrupted_metrics.json`, `repaired_metrics.json`, `corruption_report.md` | Hoàn thành |
+| Module/deliverable                        | File/hàm phụ trách                                                   | Input nhận vào              | Output bàn giao                                                                                               | Trạng thái |
+| :---------------------------------------- | :---------------------------------------------------------------------- | :---------------------------- | :------------------------------------------------------------------------------------------------------------- | :----------- |
+| **Data Corruption Simulation**      | `src/ingestion/corruption.py` (`corrupt_clean_dataframe`)           | `clean_csv` (`df`)        | `corrupted_clean_csv` & `corruption_log.json`                                                              | Hoàn thành |
+| **Baseline Pipeline Orchestration** | `src/pipelines/phase1.py` (`run_phase1_pipeline`)                   | Raw records & Config Settings | Baseline Collection`papers-baseline`, `baseline_metrics.json`, `phase1_report.md`                        | Hoàn thành |
+| **Corruption Flow Orchestration**   | `src/pipelines/corruption_flow.py` (`run_corruption_flow_pipeline`) | Clean baseline & Raw snapshot | Corrupted/Repaired collections,`corrupted_metrics.json`, `repaired_metrics.json`, `corruption_report.md` | Hoàn thành |
 
 ### Việc hỗ trợ ngoài phạm vi chính
 
-| Hoạt động | Thành viên/module được hỗ trợ | Kết quả và bằng chứng |
-| :--- | :--- | :--- |
+| Hoạt động                    | Thành viên/module được hỗ trợ                                                 | Kết quả và bằng chứng                                                                                                  |
+| :------------------------------ | :----------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------- |
 | Tích hợp & Chạy thử nghiệm | Thành viên 1 (`cleaning.py`) & Thành viên 2 (`quality.py`, `reporting.py`) | Đã ghép nối thành công toàn bộ giao tiếp giữa Ingestion, Evaluation, Observability và xuất báo cáo tự động |
-| Cấu hình LLM & OpenRouter | Cả nhóm | Thiết lập cấu hình `.env` cho GPT-4o-mini qua OpenRouter cho LLM Judge |
+| Cấu hình LLM & OpenRouter     | Cả nhóm                                                                            | Thiết lập cấu hình`.env` cho GPT-4o-mini qua OpenRouter cho LLM Judge                                                 |
 
 ---
 
 ## 3. Kết quả theo vai trò
 
-| Nhiệm vụ đã thực hiện | File/hàm/artifact liên quan | Kết quả bàn giao | Cách xác minh |
-| :--- | :--- | :--- | :--- |
-| Xây dựng Baseline Pipeline Pha 1 | `src/pipelines/phase1.py` | Executed end-to-end; tạo 24 cleaned records, collection `papers-baseline`, `phase1_report.md` | Lệnh: `python script/run_phase1.py` |
-| Bơm lỗi dữ liệu có chủ đích | `src/ingestion/corruption.py` | Tạo `papers_clean_corrupted.csv` và `corruption_log.json` (5 dạng lỗi) | Log: `data/results/corruption_log.json` |
-| Điều phối luồng Pha 2 (Corruption ➔ Repair ➔ Compare) | `src/pipelines/corruption_flow.py` | Tạo 3 ChromaDB collections, khôi phục từ `data/raw/`, tạo `corruption_report.md` | Lệnh: `python script/run_corruption_flow.py` |
+| Nhiệm vụ đã thực hiện                                 | File/hàm/artifact liên quan        | Kết quả bàn giao                                                                               | Cách xác minh                                |
+| :---------------------------------------------------------- | :----------------------------------- | :------------------------------------------------------------------------------------------------ | :--------------------------------------------- |
+| Xây dựng Baseline Pipeline Pha 1                          | `src/pipelines/phase1.py`          | Executed end-to-end; tạo 24 cleaned records, collection`papers-baseline`, `phase1_report.md` | Lệnh:`python script/run_phase1.py`          |
+| Bơm lỗi dữ liệu có chủ đích                         | `src/ingestion/corruption.py`      | Tạo`papers_clean_corrupted.csv` và `corruption_log.json` (5 dạng lỗi)                     | Log:`data/results/corruption_log.json`       |
+| Điều phối luồng Pha 2 (Corruption ➔ Repair ➔ Compare) | `src/pipelines/corruption_flow.py` | Tạo 3 ChromaDB collections, khôi phục từ`data/raw/`, tạo `corruption_report.md`          | Lệnh:`python script/run_corruption_flow.py` |
 
 ---
 
 ## 4. Giải thích phần kỹ thuật đã thực hiện
 
 ### Vấn đề cần giải quyết
+
 Xây dựng bộ điều phối pipeline (Orchestrator) giúp ghép nối các module lẻ của nhóm thành luồng tự động end-to-end, đồng thời thiết kế thuật toán làm hỏng dữ liệu có chủ đích để kiểm thử khả năng phát hiện lỗi và tự phục hồi (Auto-repair) của hệ thống RAG Agent.
 
 ### Cách triển khai
+
 1. **`src/ingestion/corruption.py`**:
    - Xóa 2 bản ghi mới nhất dựa trên `published` date.
    - Làm rỗng `summary` cho 2 bản ghi.
@@ -64,13 +66,13 @@ Xây dựng bộ điều phối pipeline (Orchestrator) giúp ghép nối các m
 
 ### Input, output và contract
 
-| Thành phần | Mô tả |
-| :--- | :--- |
-| Input | `records` từ Crossref API, `papers_clean.csv`, `test_set.json` |
-| Output | 3 ChromaDB Collections, `baseline_metrics.json`, `corrupted_metrics.json`, `repaired_metrics.json`, `phase1_report.md`, `corruption_report.md` |
-| Module phụ thuộc | `ingestion.crossref`, `ingestion.cleaning`, `evaluation.metrics`, `observability.quality`, `observability.reporting` |
-| Module sử dụng output | `script/run_phase1.py` và `script/run_corruption_flow.py` |
-| Điều kiện lỗi cần xử lý | Tự động gọi `run_phase1_pipeline()` nếu chưa có baseline artifacts trước khi chạy Pha 2 |
+| Thành phần                   | Mô tả                                                                                                                                                 |
+| :----------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Input                          | `records` từ Crossref API, `papers_clean.csv`, `test_set.json`                                                                                   |
+| Output                         | 3 ChromaDB Collections,`baseline_metrics.json`, `corrupted_metrics.json`, `repaired_metrics.json`, `phase1_report.md`, `corruption_report.md` |
+| Module phụ thuộc             | `ingestion.crossref`, `ingestion.cleaning`, `evaluation.metrics`, `observability.quality`, `observability.reporting`                          |
+| Module sử dụng output        | `script/run_phase1.py` và `script/run_corruption_flow.py`                                                                                          |
+| Điều kiện lỗi cần xử lý | Tự động gọi`run_phase1_pipeline()` nếu chưa có baseline artifacts trước khi chạy Pha 2                                                      |
 
 ### Cách xác minh
 
@@ -124,14 +126,14 @@ Xây dựng bộ điều phối pipeline (Orchestrator) giúp ghép nối các m
 
 ### Metrics chính
 
-| Metric/signal | Baseline | Corrupted | Repaired | Nhận xét của cá nhân |
-| :--- | ---: | ---: | ---: | :--- |
-| `retrieval_hit_rate` | **1.0000** | **0.8750** | **1.0000** | Sụt giảm -12.5% do bị xóa bài báo mới và chèn nhiễu; khôi phục 100% sau repair |
-| `mean_token_f1` | **0.6667** | **0.5475** | **0.6667** | Tụt giảm do câu trả lời bị thiếu ngữ cảnh; phục hồi hoàn toàn sau repair |
-| `judge_accuracy` | **0.6667** | **0.5417** | **0.6667** | GPT-4o-mini đánh giá sai nhiều hơn khi context bị hỏng; phục hồi hoàn toàn |
-| `mean_judge_score` | **3.6667** | **3.1667** | **3.6667** | Điểm số trung bình giảm 0.5★ khi dữ liệu lỗi và khôi phục lại 3.6667★ |
-| Quality checks | **PASS (16/16)** | **FAIL (7 Fail)** | **PASS (16/16)** | Phát hiện chính xác 7 quy tắc dữ liệu bị vi phạm khi corrupt và đạt 100% sau repair |
-| Freshness status | **PASS** | **FAIL (2 Stale)** | **PASS** | Phát hiện 2 bài báo bị đổi ngày về năm 2020 và khôi phục thành công |
+| Metric/signal          |               Baseline |                Corrupted |               Repaired | Nhận xét của cá nhân                                                                       |
+| :--------------------- | ---------------------: | -----------------------: | ---------------------: | :---------------------------------------------------------------------------------------------- |
+| `retrieval_hit_rate` |       **1.0000** |         **0.8750** |       **1.0000** | Sụt giảm -12.5% do bị xóa bài báo mới và chèn nhiễu; khôi phục 100% sau repair      |
+| `mean_token_f1`      |       **0.6667** |         **0.5475** |       **0.6667** | Tụt giảm do câu trả lời bị thiếu ngữ cảnh; phục hồi hoàn toàn sau repair           |
+| `judge_accuracy`     |       **0.6667** |         **0.5417** |       **0.6667** | GPT-4o-mini đánh giá sai nhiều hơn khi context bị hỏng; phục hồi hoàn toàn           |
+| `mean_judge_score`   |       **3.6667** |         **3.1667** |       **3.6667** | Điểm số trung bình giảm 0.5★ khi dữ liệu lỗi và khôi phục lại 3.6667★             |
+| Quality checks         | **PASS (16/16)** |  **FAIL (7 Fail)** | **PASS (16/16)** | Phát hiện chính xác 7 quy tắc dữ liệu bị vi phạm khi corrupt và đạt 100% sau repair |
+| Freshness status       |         **PASS** | **FAIL (2 Stale)** |         **PASS** | Phát hiện 2 bài báo bị đổi ngày về năm 2020 và khôi phục thành công              |
 
 ### Kết luận từ số liệu
 
@@ -140,7 +142,7 @@ Xây dựng bộ điều phối pipeline (Orchestrator) giúp ghép nối các m
 2. **[Repair action] ➔ [quality/freshness signal phục hồi] ➔ [agent metric phục hồi hoặc chưa phục hồi]**:
    Khi chạy lại luồng cleaning từ `data/raw/crossref_records.json`, `quality_report` phục hồi về `PASS` (16/16 checks), kéo theo `retrieval_hit_rate` và `mean_judge_score` phục hồi 100% về mức Baseline ban đầu.
 
-**Corruption ảnh hưởng rõ nhất:** 
+**Corruption ảnh hưởng rõ nhất:**
 Việc **rỗng summary** và **chèn noise `[corrupted_noise]`** ảnh hưởng nghiêm trọng nhất vì làm thay đổi hoàn toàn vector embedding của tài liệu, khiến tầng vector search tìm nhầm tài liệu khác.
 
 ---
@@ -161,13 +163,12 @@ Tôi sẽ cài đặt thêm công cụ **Great Expectations (GX)** để tự đ
 
 ## 10. Cam kết của thành viên
 
-- [x] Nội dung báo cáo phản ánh đúng phần việc và mức hiểu của tôi.
-- [x] Tôi có thể giải thích luồng end-to-end, không chỉ module mình phụ trách.
-- [x] Mọi kết luận về kết quả đều có artifact hoặc metric để đối chiếu.
-- [x] Tôi không ghi “đã chạy thành công” cho phần chưa được kiểm chứng.
-- [x] Báo cáo không chứa `.env`, API key, token hoặc secret.
-- [x] Báo cáo này không phải bản sao nguyên văn của báo cáo nhóm hoặc báo cáo thành viên khác.
+- [X] Nội dung báo cáo phản ánh đúng phần việc và mức hiểu của tôi.
+- [X] Tôi có thể giải thích luồng end-to-end, không chỉ module mình phụ trách.
+- [X] Mọi kết luận về kết quả đều có artifact hoặc metric để đối chiếu.
+- [X] Tôi không ghi “đã chạy thành công” cho phần chưa được kiểm chứng.
+- [X] Báo cáo không chứa `.env`, API key, token hoặc secret.
+- [X] Báo cáo này không phải bản sao nguyên văn của báo cáo nhóm hoặc báo cáo thành viên khác.
 
-**Họ và tên:** Nguyễn Hữu Hiếu  
-**MSSV:** 2A202601429  
+**Họ và tên:** Thành viên 3 (User)
 **Ngày xác nhận:** 2026-08-06

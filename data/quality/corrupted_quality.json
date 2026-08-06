@@ -1,10 +1,10 @@
 {
-  "report_name": "baseline_quality",
-  "generated_at": "2026-08-06T04:20:23.883488+00:00",
+  "report_name": "corrupted_quality",
+  "generated_at": "2026-08-06T04:22:37.237811+00:00",
   "total_rows": 24,
-  "passed": true,
-  "passed_checks": 16,
-  "failed_checks": 0,
+  "passed": false,
+  "passed_checks": 9,
+  "failed_checks": 7,
   "checks": [
     {
       "name": "required_columns",
@@ -33,9 +33,9 @@
     {
       "name": "paper_id_unique",
       "dimension": "uniqueness",
-      "passed": true,
-      "failed_rows": 0,
-      "observed": 0,
+      "passed": false,
+      "failed_rows": 4,
+      "observed": 4,
       "expected": "0 rows with duplicate paper_id values"
     },
     {
@@ -49,25 +49,25 @@
     {
       "name": "title_length",
       "dimension": "validity",
-      "passed": true,
-      "failed_rows": 0,
-      "observed": 0,
+      "passed": false,
+      "failed_rows": 1,
+      "observed": 1,
       "expected": "all non-empty titles have >= 10 characters"
     },
     {
       "name": "summary_complete",
       "dimension": "completeness",
-      "passed": true,
-      "failed_rows": 0,
-      "observed": 0,
+      "passed": false,
+      "failed_rows": 2,
+      "observed": 2,
       "expected": "0 empty summaries"
     },
     {
       "name": "summary_length",
       "dimension": "validity",
-      "passed": true,
-      "failed_rows": 0,
-      "observed": 0,
+      "passed": false,
+      "failed_rows": 2,
+      "observed": 2,
       "expected": "all summaries have >= 100 characters"
     },
     {
@@ -113,25 +113,25 @@
     {
       "name": "published_age_consistent",
       "dimension": "consistency",
-      "passed": true,
-      "failed_rows": 0,
-      "observed": 0,
+      "passed": false,
+      "failed_rows": 2,
+      "observed": 2,
       "expected": "age_days agrees with published date within 1 day"
     },
     {
       "name": "freshness_threshold",
       "dimension": "freshness",
-      "passed": true,
-      "failed_rows": 0,
-      "observed": 0,
+      "passed": false,
+      "failed_rows": 2,
+      "observed": 2,
       "expected": "0 rows older than 180 days"
     },
     {
       "name": "corruption_markers_absent",
       "dimension": "validity",
-      "passed": true,
-      "failed_rows": 0,
-      "observed": 0,
+      "passed": false,
+      "failed_rows": 2,
+      "observed": 2,
       "expected": "0 rows containing known corruption/noise markers"
     }
   ]
